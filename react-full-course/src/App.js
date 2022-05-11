@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import { useState, useReducer } from 'react'
+import { useState, useReducer, useEffect } from 'react'
 
 
 // How to write components:
@@ -16,7 +16,7 @@ function MyFuntionComponent() { //  functional component
 
 const MyComponent = (props /* {name}*/) => { // Passing data through props
   return(
-    <p>🔥 Hello {props.name /*{name}*/}</p>
+    <p>🔥 Hello {props.name /*{name}*/}</p> /* use braces to pass a JS expression but not statement */
   );
 }
 
@@ -190,7 +190,7 @@ function ReducerState() {
       <p>Counter: {state.count}</p>
       <p>Name: {state.name}</p>
       <button
-        onClick={() => dispatch({type: 'reset', payload: 0})}>
+        onClick={() => dispatch({type: 'reset'})}>
         Reiniciar
       </button>
       <button onClick={() => dispatch({type: 'decrement'})}>-</button>
@@ -236,11 +236,56 @@ const LazyReducerCount = ({initialCount}) => {
       <p>Contador: {state.count}</p>
       <p>Name: {state.name}</p>
       <button
-        onClick={() => dispatch({type: 'reset', payload: initialCount})}>
+        onClick={() => dispatch({type: 'reset', payload: initialCount})}
+      >
         Reiniciar
       </button>
       <button onClick={() => dispatch({type: 'decrement'})}>-</button>
       <button onClick={() => dispatch({type: 'increment'})}>+</button>
+    </>
+  );
+}
+
+// ----------------------------------------------------------------
+
+// Lifecycle and Effects
+const LifeCycle = () => {
+  const [count, setCount] = useState(0);
+
+  // useEffect is a react rook that manages the components's lifecycle: mount, update and unmount.
+  // the useEffect function takes two arguments: a function that you want to run, and an array of 
+  // dependencies that will make the useEffect function run whatever those dependencies updates.
+  // If you pass an ampty array, the function will ran when the component first initialize (like
+  // "onMounted" in vue). the useEffect function itself is not an expression, thus it doesn't
+  // have an madatory return, but if you provide something, it must be a function, and it will
+  //run when the component is destroyed. 
+
+  // useEffect is called in the moment the component is rendered for the first time, and if the
+  // second argument is provided, when a value updates.
+  useEffect(() => {
+    console.log('mounted ' + count);
+    
+    const timer = setTimeout(() => {
+      setCount((count) => count + 1);
+      console.log('updated ' + count);
+    }, 1000);
+
+    // In the official react docs, the destruction function is an optional function
+    // that is normally used when your "effects"(code you executed inside useEffect) need 
+    // to be "clean-up" se de docs to better understanding:
+    // https://pt-br.reactjs.org/docs/hooks-effect.html#effects-with-cleanup
+    return () => { // the destruction function is called when the count value changes.
+
+      console.log('destroyed ' + count); 
+      clearTimeout(timer);
+    }
+  }, [count]);
+
+  return(
+    <>
+      <h1>LifeCycle with useEffect</h1>
+      <p>count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>count</button>
     </>
   );
 }
@@ -262,7 +307,7 @@ const App = () => {
           Learn React
         </a>
       </header>
-      <MyComponent name={`JeffD ` + 23 /* use braces to pass a JS expression but not statement */}/>
+      <MyComponent name={`JeffD ` + 23}/>
         <Ternary count={ 22 }/>
       <Conditional count={ 22 }/>
       <ListOfAnimals />
@@ -275,6 +320,7 @@ const App = () => {
       <p>---------------------------</p>
       <LazyReducerCount initialCount={10}/>
       <p>---------------------------</p>
+      <LifeCycle />
     </div>
   );
 }
