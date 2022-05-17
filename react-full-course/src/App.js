@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
-import { useState, useReducer, useEffect } from 'react'
+import { useState, useReducer, useEffect, createContext, useContext } from 'react'
+import { ParentWithCountContext } from './usingContextInDifferentFiles/Parent.js';
 
 
 // How to write components:
@@ -270,11 +271,10 @@ const LifeCycle = () => {
       console.log('updated ' + count);
     }, 1000);
 
-    // In the official react docs, the destruction function is an optional function
-    // that is normally used when your "effects"(code you executed inside useEffect) need 
-    // to be "clean-up" se de docs to better understanding:
-    // https://pt-br.reactjs.org/docs/hooks-effect.html#effects-with-cleanup
-    return () => { // the destruction function is called when the count value changes.
+    // The destruction function is an optional function that is normally used when your 
+    // "effects"(code you executed inside useEffect) need to be "clean-up" se de docs to
+    //  better understanding: https://pt-br.reactjs.org/docs/hooks-effect.html#effects-with-cleanup
+    return () => { // the destruction function is called when the count value changes or when the component us unmount.
 
       console.log('destroyed ' + count); 
       clearTimeout(timer);
@@ -288,6 +288,62 @@ const LifeCycle = () => {
       <button onClick={() => setCount(count + 1)}>count</button>
     </>
   );
+}
+
+// ----------------------------------------------------------------
+
+// Context
+
+// This unidirecional data passing through is called "prop drilling" and depending
+// on you site's logic, it can be a pain to maintain.
+const PropDrilling = () => {
+  const [count] = useState(0);
+
+  return <Child count = {count}></Child>
+}
+
+const Child = ({ count }) => {
+  return <GrandChild count={count}></GrandChild>
+}
+
+const GrandChild = ({ count }) => {
+  return (
+    <>
+      <h1>Prop drilling</h1>
+      <div>{count}</div>
+    </>
+  )
+}
+
+// createCountext is the hook that can be placed in somewhere in component tree, and can provide
+// sharable data through the rest of the component tree using other hook called useContext, at any level.
+
+// Data you wnat to share
+const CountContext = createContext(0);
+
+const PropDrillingWithCountContext = () => {
+  const [count] = useState(1);
+
+  return (
+    <CountContext.Provider value={count}>
+    <ChildWithCountContext />
+    </CountContext.Provider>
+  )
+}
+
+const ChildWithCountContext = () => {
+  return <GrandChildWithCountContext />
+}
+
+const GrandChildWithCountContext = () => {
+  const count = useContext(CountContext);
+
+  return (
+    <>
+      <h1>Count Context</h1>
+      <div>{count}</div>
+    </>
+  )
 }
 
 const App = () => {
@@ -321,6 +377,10 @@ const App = () => {
       <LazyReducerCount initialCount={10}/>
       <p>---------------------------</p>
       <LifeCycle />
+      <p>---------------------------</p>
+      <PropDrilling />
+      <p>---------------------------</p>
+      <ParentWithCountContext />
     </div>
   );
 }
