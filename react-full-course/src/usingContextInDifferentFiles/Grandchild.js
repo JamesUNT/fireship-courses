@@ -3,13 +3,14 @@
    import { CountContext } from './Parent.js'
    
    export const GrandChildWithCountContext = () => {
-    const [count, setCount] = useContext(CountContext);
+    const { count, increaseCount } = useContext(CountContext);
   
     return (
       <>
         <h1>Count Context</h1>
-        <div>{count}</div>
-        <button onClick={() => setCount(count + 1)}>count</button>
+        <div>{count.name}</div>
+        <div>{count.age}</div>
+        <button onClick={() => increaseCount()}>count age</button>
       </>
     )
   }
