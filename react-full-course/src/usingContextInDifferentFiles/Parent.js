@@ -1,11 +1,20 @@
-import {  useState, createContext } from "react";
+import {  useState, createContext, useContext } from "react";
 import { ChildWithCountContext } from './Child'
 
-const CountContext = createContext();
+// the value inside the hook is a default value, which can be access by 
+// any component who is not inside the provider but have the context.
+const CountContext = createContext({
+  name: "Thiago",
+  age: 22
+});
 
+const ChildWithNoProvider = () => {
+  const context = useContext(CountContext);
+  return <h2>Child with no provider: {context.name}, age: {context.age}</h2>;
+}
 
-const ParentWithCountContext = () => {
-    const [count, setCount] = useState({
+export const ParentWithCountContext = () => {
+    const [count, setCount] = useState({ // State managed by any component who is inside the provider context.
       name: "Jeffey",
       age: 23
     });
@@ -18,10 +27,13 @@ const ParentWithCountContext = () => {
     }
 
   return (
-    <CountContext.Provider value={{count, increaseCount}}>
-      <ChildWithCountContext />
-    </CountContext.Provider>
+    <>
+      <CountContext.Provider value={{count, setCount, increaseCount}}>
+        <ChildWithCountContext />
+      </CountContext.Provider>
+      <ChildWithNoProvider />
+    </>
   )
 }
 
-export {CountContext, ParentWithCountContext}
+export default CountContext

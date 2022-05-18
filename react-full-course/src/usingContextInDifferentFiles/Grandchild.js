@@ -1,16 +1,16 @@
 
    import { useContext } from "react";
-   import { CountContext } from './Parent.js'
+   import CountContext from './Parent.js'
    
    export const GrandChildWithCountContext = () => {
-    const { count, increaseCount } = useContext(CountContext);
+    const context = useContext(CountContext);
   
     return (
       <>
         <h1>Count Context</h1>
-        <div>{count.name}</div>
-        <div>{count.age}</div>
-        <button onClick={() => increaseCount()}>count age</button>
+        <div>{context.count.name}</div>
+        <div>{context.count.age}</div>
+        <button onClick={() => context.increaseCount() /* context.setCount({...context.count, age: context.count.age + 1}) */}>count age</button>
       </>
     )
   }
