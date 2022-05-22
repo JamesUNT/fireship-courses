@@ -2,7 +2,8 @@ import logo from './logo.svg';
 import './App.css';
 import { useState, useReducer, useEffect, createContext, useContext } from 'react'
 import { ParentWithCountContext } from './usingContextInDifferentFiles/Parent.js';
-import { NamedContext } from './context/SpecificContext.js';
+import { SpecificContextComponent } from './context/SpecificContext.js';
+import AuthContext from "./context/SpecificContext.js";
 
 
 // How to write components:
@@ -347,6 +348,18 @@ const GrandChildWithCountContext = () => {
   )
 }
 
+const SpecificContextChildComponent = () => {
+  const auth = useContext(AuthContext);
+
+  return (
+    <>
+      <p>Name: {auth.login.name}</p>
+      <p>Age: {auth.login.age}</p>
+      <p>Signed: {auth.login.signed}</p>
+    </>
+  )
+}
+
 const App = () => {
   return (
     <div className="App">
@@ -383,9 +396,10 @@ const App = () => {
       <p>---------------------------</p>
       <ParentWithCountContext />
       <p>---------------------------</p>
-      <NamedContext>
+      <SpecificContextComponent>
+        <SpecificContextChildComponent />
         <h1>User is authenticated.</h1>
-      </NamedContext>
+      </SpecificContextComponent>
     </div>
   );
 }

@@ -3,18 +3,18 @@ import {  createContext, useState } from "react";
 const AuthContext = createContext({});
 
 
-export const NamedContext = ({ children }) => {
+export const SpecificContextComponent = ({ children }) => {
 
   const [login, setLogin] = useState({ // State managed by any component who is inside the provider context.
     name: "Jeffey",
     age: 23,
-    signed: false
+    signed: true
   });
 
   return (
     <>
       {
-        login.signed == true 
+        login.signed === true 
         ? <AuthContext.Provider value={{login, setLogin}}>
             {children}
           </AuthContext.Provider>
