@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import { useState, useReducer, useEffect, createContext, useContext } from 'react'
 import { ParentWithCountContext } from './usingContextInDifferentFiles/Parent.js';
+import { NamedContext } from './context/SpecificContext.js';
 
 
 // How to write components:
@@ -381,6 +382,10 @@ const App = () => {
       <PropDrilling />
       <p>---------------------------</p>
       <ParentWithCountContext />
+      <p>---------------------------</p>
+      <NamedContext>
+        <h1>User is authenticated.</h1>
+      </NamedContext>
     </div>
   );
 }

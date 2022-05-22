@@ -1,22 +1,26 @@
-import {  createContext } from "react";
+import {  createContext, useState } from "react";
 
 const AuthContext = createContext({});
 
 
 export const NamedContext = ({ children }) => {
 
-
-    const Login = async () => {
-        const response = await api.post('/login', {
-          email: 'example@email.com',
-          password: '123456',
-        });
-    }
+  const [login, setLogin] = useState({ // State managed by any component who is inside the provider context.
+    name: "Jeffey",
+    age: 23,
+    signed: false
+  });
 
   return (
-    <AuthContext.Provider value={{signed: true, Login}}>
-      {children}
-    </AuthContext.Provider>
+    <>
+      {
+        login.signed == true 
+        ? <AuthContext.Provider value={{login, setLogin}}>
+            {children}
+          </AuthContext.Provider>
+        : <h1> User not authenticated. </h1>
+      }
+    </>
   )
 }
 
