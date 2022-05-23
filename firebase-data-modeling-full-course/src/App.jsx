@@ -1,9 +1,9 @@
-import LoginTest from "./Pages/LoginTest";
+import LoginPage from "./Pages/LoginPage";
 const App = () => {
 
   return (
     <>
-      <LoginTest/>
+      <LoginPage/>
     </>
   );
 }

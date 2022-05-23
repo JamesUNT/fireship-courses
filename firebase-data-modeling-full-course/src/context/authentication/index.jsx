@@ -2,11 +2,11 @@ import {  createContext, useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../plugins/firebase"
 
-const AuthContext = createContext(null);
+const AuthContext = createContext({});
 
 export const AuthenticationComponent = ({ children }) => {
 
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState({});
 
     useEffect(() => {
       onAuthStateChanged(auth, user => {
@@ -18,13 +18,13 @@ export const AuthenticationComponent = ({ children }) => {
 
     return (
     <>
-        {
+      {
         user
         ? <AuthContext.Provider value={user}>
             {children}
           </AuthContext.Provider>
         : <h1> User not authenticated.</h1>
-        }
+      }
     </>
     )
 }

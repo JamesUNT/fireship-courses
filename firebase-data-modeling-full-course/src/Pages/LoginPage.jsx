@@ -1,12 +1,12 @@
 import { auth } from "../plugins/firebase";
 import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { AuthenticationComponent } from "../context/authentication";
+import LoginInfo from "../components/LoginInfo";
 
-
-const LoginTest = () => {
+const LoginPage = () => {
 
   function autenticar() {
-    signInWithEmailAndPassword(auth, /*<email goes here>, <password goes here?*/)
+    signInWithEmailAndPassword(auth, "thiagoxd97@gmail.com", "souza123")
     .then((userCredential) => {
       // Signed in 
       console.log(userCredential.user);
@@ -22,7 +22,7 @@ const LoginTest = () => {
     signOut(auth)
     .then(() => {
       // Signed in 
-      alert("usuario deslogado");
+      alert("user deslogado");
       // ...
     })
     .catch((error) => {
@@ -31,11 +31,10 @@ const LoginTest = () => {
     });
   }
 
-
   return (
     <>
       <AuthenticationComponent>
-        <h1>User is authenticated </h1>
+        <LoginInfo/>
       </AuthenticationComponent>
       <button onClick={() => {autenticar()}}>Logar</button>
       <button onClick={() => {desautenticar()}}>Deslogar</button>
@@ -43,4 +42,4 @@ const LoginTest = () => {
   );
 }
 
-export default LoginTest
+export default LoginPage
