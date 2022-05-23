@@ -6,7 +6,7 @@ import LoginInfo from "../components/LoginInfo";
 const LoginPage = () => {
 
   function autenticar() {
-    signInWithEmailAndPassword(auth, "thiagoxd97@gmail.com", "souza123")
+    signInWithEmailAndPassword(auth, /*<email goes here>, <password goes here>*/)
     .then((userCredential) => {
       // Signed in 
       console.log(userCredential.user);
