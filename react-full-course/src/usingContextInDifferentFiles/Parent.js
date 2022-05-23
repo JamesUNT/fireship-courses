@@ -16,19 +16,27 @@ const ChildWithNoProvider = () => {
 export const ParentWithCountContext = () => {
     const [count, setCount] = useState({ // State managed by any component who is inside the provider context.
       name: "Jeffey",
-      age: 23
+      age: 23,
+      likes: {
+        snack: "candy",
+        quantity: 10
+      }
     });
 
-    const increaseCount = () => {
+    const increaseCountAndSnacks = () => {
       setCount({
         ...count,
-        age: count.age + 1
+        age: count.age + 1,
+        likes: {
+          ...count.likes,
+          quantity: count.likes.quantity + 10
+        }
       })
     }
 
   return (
     <>
-      <CountContext.Provider value={{count, setCount, increaseCount}}>
+      <CountContext.Provider value={{count, setCount, increaseCountAndSnacks}}>
         <ChildWithCountContext />
       </CountContext.Provider>
       <ChildWithNoProvider />
