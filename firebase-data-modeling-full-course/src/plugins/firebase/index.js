@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore"; 
-import { getAuth } from "firebase/auth";
+import { getFirestore, connectFirestoreEmulator } from "firebase/firestore"; 
+import { getAuth, connectAuthEmulator } from "firebase/auth";
 
 
 let firebaseConfig = {
@@ -15,15 +15,15 @@ let firebaseConfig = {
 // Firebase instance
 const app = initializeApp(firebaseConfig);
 
-if (location.hostname === 'localhost') {
-    firebaseConfig = {
-        databaseURL: 'localhost:8080'
-    }
-}
-
 // Firebase services
 const db = getFirestore(app);
 const auth = getAuth(app);
+
+// Setting up test enviroment
+if (location.hostname === 'localhost') {
+    connectFirestoreEmulator(db, 'localhost', 8080);
+    connectAuthEmulator(auth, "http://localhost:9099");
+}
 
 export {
     db,
