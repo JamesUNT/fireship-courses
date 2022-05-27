@@ -3,7 +3,7 @@ import { db } from "../plugins/firebase";
 
 /*collectionGroup is a method that returns every collection or subcollecion that matches the second parameter*/
 async function fetchingPostLikesDocs() {
-  const q = query(collectionGroup(db, "likes"));
+  const q = query(collectionGroup(db, "friends"));
   const postDoc = await getDocs(q);
   const docs = postDoc.forEach(doc => {
     console.log(doc.data())
