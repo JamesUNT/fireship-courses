@@ -6,17 +6,17 @@ const AuthContext = createContext();
 
 export const AuthenticationComponent = ({ children }) => {
 
-    const [user, setUser] = useState({});
+  const [user, setUser] = useState({});
 
-    useEffect(() => {
-      onAuthStateChanged(auth, user => {
-      user
-        ? setUser(user) 
-        : setUser(null)
-      })
-    }, [user])
+  useEffect(() => {
+    onAuthStateChanged(auth, user => {
+    user
+      ? setUser(user) 
+      : setUser(null)
+    })
+  }, [user])
 
-    return (
+  return (
     <>
       {
         user
@@ -26,7 +26,7 @@ export const AuthenticationComponent = ({ children }) => {
         : <h1> User not authenticated.</h1>
       }
     </>
-    )
+  )
 }
 
 export default AuthContext
