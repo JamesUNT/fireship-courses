@@ -55,11 +55,11 @@ async function fetchingAllTagsDocuments() {
 
   // const tagsReads = tags.map(tag => getDoc(doc(db, "tags", tag)));
   
-  // const resultTags = await Promise.all(tagsReads).then(element => {
-  //   return element
+  // const resultTagsDocuments = await Promise.all(tagsReads).then(documents => {
+  //   return documents
   // })
 
-  // const tagObjs = resultTags.map(element => {
+  // const tagObjs = resultTagsDocuments.map(element => {
   //   return element.data().name
   // })
 
