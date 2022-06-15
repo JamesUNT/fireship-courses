@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Loader from "../components/Loader"
 
 const Home = () => {
   return ( 
@@ -9,6 +10,7 @@ const Home = () => {
       }}>
         <a>Thiago{"'"}s Profile</a>
       </Link>
+      <Loader show />
     </div>
   );
 }
